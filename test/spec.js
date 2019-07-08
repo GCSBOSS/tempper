@@ -54,7 +54,6 @@ describe('Tempper', () => {
             let t = new Tempper();
             t.addFile('file.txt', './file.txt');
             assert(fs.existsSync(t.dir + '/file.txt'));
-            assert.strictEqual(fs.readFileSync(t.dir + '/file.txt', 'utf8'), 'foobar\r\n');
             t.clear();
         });
 
