@@ -1,8 +1,5 @@
 const assert = require('assert');
-
 const fs = require('fs');
-const os = require('os');
-const assertPathExists = p => fs.existsSync(p);
 
 const Tempper = require('../lib/main.js');
 
