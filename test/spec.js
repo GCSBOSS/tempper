@@ -104,6 +104,26 @@ describe('Tempper', () => {
 
     });
 
+    describe('::rm', () => {
+
+        it('Should remove an existing diretory', () => {
+            let t = new Tempper();
+            t.mkdir('my-test/foo');
+            t.rm('my-test')
+            t.assertMissing('my-test/foo');
+            t.clear();
+        });
+
+        it('Should remove an existing file', () => {
+            let t = new Tempper();
+            t.addFile('file.txt', './file.txt');
+            t.rm('file.txt')
+            t.assertMissing('file.txt');
+            t.clear();
+        });
+
+    });
+
     describe('::refresh', () => {
 
         it('Should return you a new clean tmp dir', () => {
