@@ -74,6 +74,18 @@ describe('Tempper', () => {
 
     });
 
+    describe('::assertMissing', () => {
+
+        it('Should throw when path exists', () => {
+            let t = new Tempper();
+            t.addFile('file.txt', './file.txt');
+            assert.doesNotThrow( () => t.assertMissing('file-WRONG.txt') );
+            assert.throws( () => t.assertMissing('file.txt') );
+            t.clear();
+        });
+
+    });
+
     describe('::mkdir', () => {
 
         it('Should create an empty dir inside the tmp dir', () => {
