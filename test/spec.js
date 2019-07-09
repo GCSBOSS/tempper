@@ -62,12 +62,31 @@ describe('Tempper', () => {
 
     });
 
+    describe('::assertExists', () => {
+
+        it('Should throw when path doesn\'t exist', () => {
+            let t = new Tempper();
+            t.addFile('file.txt', './file.txt');
+            assert.throws( () => t.assertExists('file-WRONG.txt') );
+            assert.doesNotThrow( () => t.assertExists('file.txt') );
+            t.clear();
+        });
+
+    });
+
     describe('::mkdir', () => {
 
         it('Should create an empty dir inside the tmp dir', () => {
             let t = new Tempper();
             t.mkdir('my-test');
-            assert(fs.existsSync(t.dir + '/my-test'));
+            t.assertExists('my-test');
+            t.clear();
+        });
+
+        it('Should create an empty dir recursively', () => {
+            let t = new Tempper();
+            t.mkdir('my-test/my-super-test');
+            t.assertExists('my-test/my-super-test');
             t.clear();
         });
 
