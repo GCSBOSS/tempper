@@ -62,12 +62,63 @@ describe('Tempper', () => {
 
     });
 
+    describe('::assertExists', () => {
+
+        it('Should throw when path doesn\'t exist', () => {
+            let t = new Tempper();
+            t.addFile('file.txt', './file.txt');
+            assert.throws( () => t.assertExists('file-WRONG.txt') );
+            assert.doesNotThrow( () => t.assertExists('file.txt') );
+            t.clear();
+        });
+
+    });
+
+    describe('::assertMissing', () => {
+
+        it('Should throw when path exists', () => {
+            let t = new Tempper();
+            t.addFile('file.txt', './file.txt');
+            assert.doesNotThrow( () => t.assertMissing('file-WRONG.txt') );
+            assert.throws( () => t.assertMissing('file.txt') );
+            t.clear();
+        });
+
+    });
+
     describe('::mkdir', () => {
 
         it('Should create an empty dir inside the tmp dir', () => {
             let t = new Tempper();
             t.mkdir('my-test');
-            assert(fs.existsSync(t.dir + '/my-test'));
+            t.assertExists('my-test');
+            t.clear();
+        });
+
+        it('Should create an empty dir recursively', () => {
+            let t = new Tempper();
+            t.mkdir('my-test/my-super-test');
+            t.assertExists('my-test/my-super-test');
+            t.clear();
+        });
+
+    });
+
+    describe('::rm', () => {
+
+        it('Should remove an existing diretory', () => {
+            let t = new Tempper();
+            t.mkdir('my-test/foo');
+            t.rm('my-test')
+            t.assertMissing('my-test/foo');
+            t.clear();
+        });
+
+        it('Should remove an existing file', () => {
+            let t = new Tempper();
+            t.addFile('file.txt', './file.txt');
+            t.rm('file.txt')
+            t.assertMissing('file.txt');
             t.clear();
         });
 
