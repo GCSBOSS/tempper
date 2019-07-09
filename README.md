@@ -24,6 +24,15 @@ console.log(process.cwd());
 
 // Shortcut to create folders on the tmp dir.
 tmp.mkdir('my-dir');
+tmp.mkdir('my-recursive-dir/new-dir');
+
+// Shortcut to remove both files os directories.
+tmp.rm('my-recursive-dir');
+tmp.rm('same-file');
+
+// Assert wether paths exist or not.
+tmp.assertMissing('my-recursive-dir/new-dir');
+tmp.assertExists('same-file'); // => should throw
 
 // Once you're done, erase the tempper diretory for good.
 tmp.clear();
